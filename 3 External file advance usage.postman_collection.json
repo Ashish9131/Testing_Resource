@@ -1,0 +1,195 @@
+{
+	"info": {
+		"_postman_id": "548233a9-b09c-4a34-8526-9abb3b6eef8c",
+		"name": "3 External file advance usage",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Generate reference",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"",
+							"pm.test(\"Should contain reference id\", function () {",
+							"    pm.expect(response.uuid).to.exist;",
+							"});",
+							"",
+							"pm.globals.set(\"referenceId\", response.uuid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "httpbin.org/uuid",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"uuid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"if (pm.variables.get(\"isValid\") == \"true\") {",
+							"    pm.test(\"Should contain the reference id\", function () {",
+							"        pm.expect(response.json.referenceId).to.eql(pm.globals.get(\"referenceId\"));",
+							"    });",
+							"    ",
+							"    pm.test(\"Should contain the customer id\", function () {",
+							"        pm.expect(response.json.customerId).to.eql(parseInt(pm.variables.get(\"customerId\")));",
+							"    });",
+							"    ",
+							"    pm.test(\"Should contain the product id\", function () {",
+							"        pm.expect(response.json.productId).to.eql(parseInt(pm.variables.get(\"productId\")));",
+							"    });    ",
+							"} else {",
+							"    pm.test(\"Should not be valid\", function () {",
+							"       pm.expect(response.json).to.be.null;",
+							"    });",
+							"}",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set('metaInfoBody', JSON.stringify(pm.variables.get('metaInfo')));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"referenceId\": \"{{referenceId}}\",\n\t\"customerId\": {{customerId}},\n\t\"productId\": {{productId}},\n\t\"metaInfo\": {{metaInfoBody}}\n}"
+				},
+				"url": {
+					"raw": "httpbin.org/post",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is \" + pm.iterationData.get('expectedStatus'), function () {",
+							"    pm.response.to.have.status(pm.iterationData.get('expectedStatus'));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "httpbin.org/status/{{status}}",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"status",
+						"{{status}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "customerId",
+			"value": "100",
+			"type": "string"
+		},
+		{
+			"key": "productId",
+			"value": "200",
+			"type": "string"
+		},
+		{
+			"key": "isValid",
+			"value": "true",
+			"type": "string"
+		},
+		{
+			"key": "metaInfo",
+			"value": "{}",
+			"type": "string"
+		}
+	]
+}
