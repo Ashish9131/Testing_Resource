@@ -1,0 +1,8 @@
+20:05:14.854 [main] INFO  resources.base - we have reached testimonials
+20:09:21.702 [main] INFO  resources.base - we have reached testimonials
+20:09:21.707 [main] DEBUG resources.base - this is great
+20:09:21.707 [main] ERROR resources.base - This is great to have some errors
+15:50:26.122 [main] INFO  resources.base - we have reached testimonials
+15:50:26.126 [main] DEBUG resources.base - this is great
+15:50:26.126 [main] ERROR resources.base - This is great to have some errors
+12:35:12.259 [main] INFO  resources.base - we have reached testimonials

@@ -1,0 +1,8 @@
+12:35:12.263 [main] DEBUG resources.base - this is great
+12:35:12.279 [main] ERROR resources.base - This is great to have some errors
+17:06:08.760 [main] INFO  resources.base - we have reached testimonials
+17:06:08.797 [main] DEBUG resources.base - this is great
+17:06:08.798 [main] ERROR resources.base - This is great to have some errors
+17:36:47.486 [main] INFO  resources.base - we have reached testimonials
+17:36:47.490 [main] DEBUG resources.base - this is great
+17:36:47.490 [main] ERROR resources.base - This is great to have some errors
